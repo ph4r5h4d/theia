@@ -39,3 +39,14 @@ services:
     - ./filebrowser.json:/config/settings.json
    ports:
     - 9090:80
+
+  dlna:
+    image: vladgh/minidlna
+    container_name: minidlna
+    restart: always
+    volumes:
+      - ${STORAGE_PATH}:/media
+    network_mode: host
+    environment:
+      MINIDLNA_MEDIA_DIR: /media
+      MINIDLNA_FRIENDLY_NAME: HomeMediaServer
