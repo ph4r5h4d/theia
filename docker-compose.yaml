@@ -17,6 +17,7 @@ services:
     build: builds/aria2
     volumes:
       - ./aria2.conf:/.aria2/aria2.conf:ro
+      - ${STORAGE_PATH}:/home/storage
     ports:
       - 50100:50100
     network_mode: "service:vpn"
