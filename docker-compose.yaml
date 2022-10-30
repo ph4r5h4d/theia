@@ -35,7 +35,7 @@ services:
    image: filebrowser/filebrowser:s6
    volumes:
     - ${STORAGE_PATH}:/storage
-    - ${FILEBROWSER_DB}:/database/filebrowser.db
+    - ${FILEBROWSER_DB}:/database
     - ./filebrowser.json:/config/settings.json
    ports:
     - 9090:80
