@@ -1,0 +1,40 @@
+version: "3"
+services:
+  vpn:
+    image: ghcr.io/bubuntux/nordvpn
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      TOKEN: ${TOKEN}
+      CONNECT: ${CONNECT}
+      TECHNOLOGY: ${TECHNOLOGY}
+      NETWORK: ${NETWORK}
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+
+  aria2:
+    build: builds/aria2
+    volumes:
+      - ./aria2.conf:/.aria2/aria2.conf:ro
+    ports:
+      - 50100:50100
+    network_mode: "service:vpn"
+    depends_on:
+      - vpn
+  
+  aria2ng:
+    build: builds/aria2ng
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - 8080:8080
+
+  files:
+   image: filebrowser/filebrowser:s6
+   volumes:
+    - ${STORAGE_PATH}:/storage
+    - ${FILEBROWSER_DB}:/database/filebrowser.db
+    - ./filebrowser.json:/config/settings.json
+   ports:
+    - 9090:80
