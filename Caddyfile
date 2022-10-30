@@ -4,8 +4,6 @@
 }
 
 :8080 
-reverse_proxy /jsonrpc aria2:50100
-reverse_proxy /rpc aria2:50100
 
 root * /var/www/aria2ng
 file_server
