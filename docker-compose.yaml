@@ -39,7 +39,7 @@ services:
     - ./filebrowser.json:/config/settings.json
    ports:
     - 9090:80
-  environment:
+   environment:
     PUID: 0
     PGID: 0
 
